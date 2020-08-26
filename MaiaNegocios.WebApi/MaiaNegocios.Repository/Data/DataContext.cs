@@ -16,10 +16,6 @@ namespace MaiaNegocios.Repository
 
         }
 
-        public DbSet<Pais> Paises { get; set; }
-        public DbSet<Estado> Estados { get; set; }
-        public DbSet<Cidade> Cidades { get; set; }
-        public DbSet<Plano> Planos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,8 +30,6 @@ namespace MaiaNegocios.Repository
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new PaisMap());
-            modelBuilder.ApplyConfiguration(new PlanoMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
 
 

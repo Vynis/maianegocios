@@ -54,8 +54,6 @@ namespace MaiaNegocios.WebApi
                 );
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
-            services.AddScoped<IPaisRepository, PaisRepository>();
-            services.AddScoped<IPlanoRepository, PlanoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
 

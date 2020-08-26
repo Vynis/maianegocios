@@ -7,8 +7,6 @@ namespace MaiaNegocios.Domain.Models
     public class Cliente
     {
         public int Id { get; set; }
-        public int PlanoId { get; set; }
-        public Plano Plano { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }

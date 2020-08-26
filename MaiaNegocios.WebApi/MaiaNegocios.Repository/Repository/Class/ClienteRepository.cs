@@ -19,25 +19,5 @@ namespace MaiaNegocios.Repository.Repository.Class
             _dataContext = dataContext;
         }
 
-        public override async Task<Cliente[]> ObterTodos()
-        {
-            IQueryable<Cliente> query = _dataContext.Clientes.Include(c => c.Plano);
-
-            return await query.AsNoTracking().ToArrayAsync();
-        }
-
-        public override async Task<Cliente> ObterPorId(int id)
-        {
-            IQueryable<Cliente> query = _dataContext.Clientes.Include(c => c.Plano);
-
-            return await query.AsNoTracking().OrderBy(c => c.Id).Where(c => c.Id == id).FirstOrDefaultAsync();
-        }
-
-        public override async Task<Cliente[]> Buscar(Expression<Func<Cliente, bool>> predicado)
-        {
-            IQueryable<Cliente> query = _dataContext.Clientes.Include(c => c.Plano);
-
-            return await query.AsNoTracking().ToArrayAsync();
-        }
     }
 }
