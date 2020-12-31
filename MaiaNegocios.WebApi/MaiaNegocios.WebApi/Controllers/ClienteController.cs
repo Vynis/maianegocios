@@ -9,6 +9,10 @@ using MaiaNegocios.Repository.Repository.Interfaces;
 
 namespace MaiaNegocios.WebApi.Controllers
 {
+
+
+    //Teste
+
     [Route("api/[controller]")]
     [ApiController]
     public class ClienteController : ControllerBase
