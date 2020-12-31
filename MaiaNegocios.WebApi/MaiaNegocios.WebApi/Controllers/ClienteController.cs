@@ -11,7 +11,7 @@ namespace MaiaNegocios.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController : Controller
+    public class ClienteController : ControllerBase
     {
         private readonly IClienteRepository _clienteRepository;
 
@@ -27,11 +27,11 @@ namespace MaiaNegocios.WebApi.Controllers
             {
                 var results = await _clienteRepository.ObterTodos();
 
-                return Ok(results);
+                return Response(results);
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de dados falhou {ex.Message}");
+                return ResponseErro(ex);
             }
 
         }
@@ -43,11 +43,11 @@ namespace MaiaNegocios.WebApi.Controllers
             {
                 var results = await _clienteRepository.ObterPorId(id);
 
-                return Ok(results);
+                return Response(results);
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de dados falhou {ex.Message}");
+                return ResponseErro(ex);
             }
 
         }
@@ -60,11 +60,11 @@ namespace MaiaNegocios.WebApi.Controllers
             {
                 var results = await _clienteRepository.Buscar(x => x.Name.Equals(nome));
 
-                return Ok(results);
+                return Response(results);
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de dados falhou {ex.Message}");
+                return ResponseErro(ex);
             }
 
         }
@@ -74,20 +74,18 @@ namespace MaiaNegocios.WebApi.Controllers
         {
             try
             {
-                _clienteRepository.Adicionar(model);
+                var response = await _clienteRepository.Adicionar(model);
 
-                if (await _clienteRepository.SaveChangesAsync())
-                {
-                    return Ok(model);
-                }
+                if (response)
+                  return  Response("Adicionado com sucesso!");
+
+                return Response("Erro ao adicionar", false);
 
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de dados falhou {ex.Message}");
+                return ResponseErro(ex);
             }
-
-            return BadRequest();
 
         }
 
@@ -101,23 +99,20 @@ namespace MaiaNegocios.WebApi.Controllers
                 var cliente = await _clienteRepository.ObterPorId(clienteId);
 
                 if (cliente == null)
-                    return NotFound();
+                    return Response("Cliente nao encontrado", false);
 
-                _clienteRepository.Atualizar(model);
+                var response = await _clienteRepository.Atualizar(model);
 
-                if (await _clienteRepository.SaveChangesAsync())
-                {
-                    return Ok(model);
-                }
+                if (response)
+                    return Response("Atualizado com sucesso!");
+
+                return Response("Erro ao adicionar", false);
 
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de dados falhou {ex.Message}");
+                return ResponseErro(ex);
             }
-
-            return BadRequest();
-
         }
 
         [HttpDelete]
@@ -129,22 +124,20 @@ namespace MaiaNegocios.WebApi.Controllers
                 var cliente = await _clienteRepository.ObterPorId(clientId);
 
                 if (cliente == null)
-                    return NotFound();
+                    return Response("Cliente nao encontrado", false);
 
-                _clienteRepository.Remover(cliente);
+                var response =  await _clienteRepository.Remover(cliente);
 
-                if (await _clienteRepository.SaveChangesAsync())
-                {
-                    return Ok();
-                }
+                if (response)
+                    return Response("Excluido com sucesso!");
+
+                return Response("Erro ao excluir", false);
 
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de dados falhou {ex.Message}");
+                return ResponseErro(ex);
             }
-
-            return BadRequest();
 
         }
     }

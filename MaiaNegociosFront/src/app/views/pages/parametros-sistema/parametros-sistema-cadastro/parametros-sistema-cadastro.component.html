@@ -1,0 +1,53 @@
+<kt-portlet>
+  <kt-portlet-header [sticky]="true" [title]="'Editar Parametros do Sistema'" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit()" mat-raised-button matTooltip="Salvar & Continuar">
+				<span class="kt-hidden-mobile">Salvar</span>
+			</a>
+		</ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+
+    <kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000" (close)="onAlertClose($event)">
+      Encontrado alguma divergencias. Favor reveja os valores informados.
+    </kt-alert>
+    <form [formGroup]="parametrosForm" class="kt-form kt-form--group-seperator-dashed">
+      <div *ngIf="parametroSistema">    
+        <div formArrayName="parametros" *ngFor="let parametro of parametros.controls; let i=index"> 
+          <div [formGroupName]="i">
+            <div class="kt-form__section kt-form__section--first">
+              <div class="kt-form__group">
+                <div class="row">
+                  <div class="col-md-6 kt-margin-bottom-10-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                      <input matInput 
+                      [placeholder]="parametros.value[i].titulo" formControlName="valor">
+                      <mat-error>
+                        Valor é
+                        <strong>obrigatorio</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+  
+                  <div class="col-md-2 kt-margin-bottom-10-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                      <mat-select  placeholder="Selecione o status" formControlName="status">
+                        <mat-option value="A">A - Ativo</mat-option>
+                        <mat-option value="I">I - Inativo</mat-option>
+                      </mat-select>
+                      <mat-error>
+                        Status
+                        <strong>obirgátorio</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+        </div>
+      </div>
+    </form>
+  </kt-portlet-body>
+</kt-portlet>

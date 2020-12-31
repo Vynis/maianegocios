@@ -18,24 +18,27 @@ namespace MaiaNegocios.Repository.Repository.Class
             _dataContext = dataContext;
         }
 
-        public async Task<bool> SaveChangesAsync()
+        public virtual async Task<bool> SaveChangesAsync()
         {
             return await _dataContext.SaveChangesAsync() > 0;
         }
 
-        public virtual void Adicionar(TEntity entity)
+        public virtual async Task<bool> Adicionar(TEntity entity)
         {
             _dataContext.Add(entity);
+            return await _dataContext.SaveChangesAsync() > 0;
         }
 
-        public virtual void Atualizar(TEntity entity)
+        public virtual async Task<bool> Atualizar(TEntity entity)
         {
             _dataContext.Update(entity);
+            return await _dataContext.SaveChangesAsync() > 0;
         }
 
-        public virtual void Remover(TEntity entity)
+        public virtual async Task<bool> Remover(TEntity entity)
         {
             _dataContext.Remove(entity);
+            return await _dataContext.SaveChangesAsync() > 0;
         }
 
         public virtual async Task<TEntity[]> Buscar(Expression<Func<TEntity, bool>> predicado)
@@ -51,6 +54,11 @@ namespace MaiaNegocios.Repository.Repository.Class
         public virtual async Task<TEntity[]> ObterTodos()
         {
             return await _dataContext.Set<TEntity>().ToArrayAsync();
+        }
+
+        public virtual async Task<TEntity[]> ObterPorDescricao(string Descricao)
+        {
+            return await Buscar(b => b.GetType().Name.Contains("Name"));
         }
 
     }
