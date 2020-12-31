@@ -17,6 +17,7 @@ namespace MaiaNegocios.Repository
         }
 
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Banco> Bancos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,6 +32,7 @@ namespace MaiaNegocios.Repository
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new ClienteMap());
+            modelBuilder.ApplyConfiguration(new BancoMap());
 
 
         }

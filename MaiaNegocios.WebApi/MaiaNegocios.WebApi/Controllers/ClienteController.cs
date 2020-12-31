@@ -10,9 +10,6 @@ using MaiaNegocios.Repository.Repository.Interfaces;
 namespace MaiaNegocios.WebApi.Controllers
 {
 
-
-    //Teste
-
     [Route("api/[controller]")]
     [ApiController]
     public class ClienteController : ControllerBase
@@ -78,6 +75,9 @@ namespace MaiaNegocios.WebApi.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(model.Email))
+                    return Response("Email invalido", false);
+
                 var response = await _clienteRepository.Adicionar(model);
 
                 if (response)

@@ -55,6 +55,7 @@ namespace MaiaNegocios.WebApi
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IBancoRepository, BancoRepository>();
 
 
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
@@ -119,7 +120,7 @@ namespace MaiaNegocios.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.UseAuthentication();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
