@@ -13,7 +13,7 @@ namespace MaiaNegocios.WebApi.Controllers
     public class BancoController : ControllerBase
     {
         private readonly IBancoRepository _bancoRepository;
-        //TEste
+
         public BancoController(IBancoRepository bancoRepository)
         {
             _bancoRepository = bancoRepository;
